@@ -1,0 +1,97 @@
+---
+
+# tasks file for inventory
+
+# Create a directory somedir.
+# - name: Create a directory
+#   win_shell: mkdir c:\somedir
+
+#   notify: restart windows
+  
+- name: Save the result of 'whoami' in 'whoami_out'
+  win_shell: whoami
+  register: whoami_out
+
+- name: Print the generate variable
+  debug:
+    msg: "Varaible is {{ whoami_out }}"
+
+
+- name: Print the generate variable
+  debug:
+    msg: "{{ whoami_out.stdout }}"
+
+- name: List all files and directories in c:\
+  win_shell: dir
+  register: dir_contents
+
+
+- name: Print directory contents
+  debug:
+    msg: "{{ dir_contents }}"
+
+- name: Print directory contents stdout
+  debug:
+    msg: "{{ dir_contents.stdout }}"
+
+- name: Print directory contents using loops
+  debug:
+    msg: "{{ item }}"
+  loop: "{{ dir_contents.stdout_lines }}"
+
+
+- name: Print all available facts
+  ansible.builtin.debug:
+    var: ansible_facts
+
+- name: Debug ansible facts
+  debug:
+    var: ansible_facts
+
+- name: Print nodename
+  debug:
+    msg: " This is nodename {{ ansible_facts['nodename'] }}"
+
+- name: Print one
+  debug:
+    msg: " {{ ansible_processor[0] }} "
+
+- name: Set Facts Value 1
+  set_fact:
+    win_hw_processor0: " {{ ansible_processor[0] }} "
+
+
+# Execute a command in the remote shell; stdout goes to the specified
+# file on the remote.
+# - win_shell: C:\somescript.ps1 >> c:\somelog.txt
+
+
+# # Change the working directory to somedir/ before executing the command.
+# - win_shell: C:\somescript.ps1 >> c:\somelog.txt chdir=c:\somedir
+
+# # You can also use the 'args' form to provide the options. This command
+# # will change the working directory to somedir/ and will only run when
+# # somedir/somelog.txt doesn't exist.
+# - win_shell: C:\somescript.ps1 >> c:\somelog.txt
+#   args:
+#     chdir: c:\somedir
+#     creates: c:\somelog.txt
+
+# # Run a command under a non-Powershell interpreter (cmd in this case)
+# - win_shell: echo %HOMEDIR%
+#   args:
+#     executable: cmd
+#   register: homedir_out
+
+# - name: run multi-lined shell commands
+#   win_shell: |
+#     $value = Test-Path -Path C:\temp
+#     if ($value) {
+#         Remove-Item -Path C:\temp -Force
+#     }
+#     New-Item -Path C:\temp -ItemType Directory
+
+# - name: retrieve the input based on stdin
+#   win_shell: '$string = [Console]::In.ReadToEnd(); Write-Output $string.Trim()'
+#   args:
+#     stdin: Input message

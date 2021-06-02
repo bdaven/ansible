@@ -1,0 +1,5 @@
+---
+# tasks file for testbook
+
+# Perform tests
+- include: test.yml

@@ -1,0 +1,43 @@
+---
+# Create directory
+- name: Create directory structure
+  win_file:
+    path: c:\custom_facts
+    state: directory
+
+# # Create file
+# - name: Touch a file (creates if not present, updates modification time if present)
+#   win_file:
+#     path: c:\custom_facts\test.txt
+#     state: touch
+
+# # Remove file
+# - name: Remove a file, if present
+#   win_file:
+#     path: c:\custom_facts\test.txt
+#     state: absent
+
+#####################
+# Custom Facts File
+#####################
+# Remove file
+- name: Remove a file, if present
+  win_file:
+    path: c:\custom_facts\custom_facts.txt
+    state: absent
+
+#####################
+# SCCM Facts File
+#####################
+# Remove file
+- name: Remove a file, if present
+  win_file:
+    path: c:\custom_facts\sccm_custom_facts.txt
+    state: absent
+
+# Copy file
+- name: Copy a file
+  win_copy:
+    src: custom_facts.ps1
+    dest: c:\custom_facts\sccm_custom_facts.ps1
+    remote_src: yes
