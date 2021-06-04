@@ -1,0 +1,25 @@
+---
+
+- name: CPU Average Check 
+  win_shell: |
+    $percentthreshold = "{{ cpu_threshold }}"
+
+    $Result = Get-WmiObject Win32_Processor | Measure-Object -Property LoadPercentage -Average | Select Average
+
+    If ($Result.Average -gt $percentthreshold) {
+        $htmloutput = "<b>" + $env:computername + " - CPU Threshold Breach</b><p>"
+        $htmloutput = $htmloutput + "<table><colgroup><col/><col/><col/><col/><col/></colgroup>" + "<tr><th>CPU %</th></tr>"
+        $Result | foreach { $htmloutput = $htmloutput + "<tr><td>" + $_.Average + "</td></tr>"}
+
+        $htmloutput = $htmloutput + "</table>"
+        $htmloutput | Out-Host
+    }
+  register: health_data
+  ignore_errors: true
+
+- set_stats:
+    data: 
+      health_data: "{{ health_data.stdout_lines | to_nice_yaml }}"
+  
+
+

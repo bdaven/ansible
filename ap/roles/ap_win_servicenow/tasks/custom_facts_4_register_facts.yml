@@ -1,0 +1,13 @@
+---
+- name: Print the nodename variable
+  debug:
+    msg: "Varaible nodename: {{ nodename }}"
+
+- name: Print the FullName variable
+  debug:
+    msg: "Varaible custom_facts.FullName: {{ custom_facts.FullName }}"
+
+- name: Print the CPU Manufacturer variable
+  debug:
+    msg: "Varaible custom_facts.CPUManufacturer.0: {{ custom_facts.CPUManufacturer.0 }}"
+

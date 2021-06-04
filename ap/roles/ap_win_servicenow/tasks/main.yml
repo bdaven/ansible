@@ -1,0 +1,15 @@
+---
+# Perform tests
+# - include: test.yml
+
+# Perform custom_facts_setup
+- include: custom_facts_1_setup_dir.yml
+
+# Perform custom_facts_gather
+- include: custom_facts_2_gather.yml
+
+# Perform custom_registry_update
+- include: custom_facts_3_registry_update.yml
+
+# Perform custom_register_facts
+- include: custom_facts_4_register_facts.yml

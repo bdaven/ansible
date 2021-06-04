@@ -1,0 +1,46 @@
+---
+
+# Get all facts about the server
+- include: all_facts.yml
+
+# Server uptime
+- include: uptime.yml
+
+# CPU check
+- include: cpu_check.yml
+  when: cpu_check | bool
+
+# Get Disk information and set stat if failed. 
+- include: disk_check.yml
+  when: disk_check | bool
+
+# Get Volume information for Database Servers only and set stat if failed. 
+- include: volume_check_db.yml
+  when: database_server == 'true'
+
+# Check for Automatic Services to ensure started. Set stat if not. 
+- include: services_check.yml
+  when: services_check | bool
+
+# Check for Event Viewer Application Errors after most recent reboot
+- include: events.yml
+  when: events_check | bool
+
+# Domain Controller Repl Summary
+- include: repl_check.yml
+
+# Cluster Summary
+- include: cluster_check.yml
+
+# IIS Summary
+- include: iis_check.yml
+
+
+
+
+
+
+
+
+
+

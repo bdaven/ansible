@@ -1,0 +1,26 @@
+---
+- name: Get AD Repadmin Details
+  win_shell: |
+    $dc = get-windowsfeature | where-object {($_.Name -eq "AD-Domain-Services") -and ($_.InstallState -eq "Installed")}
+
+    if ($dc){
+      $repdata = & repadmin /replsummary
+      $repdata = $repdata.split("`r`n",[StringSplitOptions]::RemoveEmptyEntries)
+
+      $htmloutput = "<b>" + $env:computername + " - RepAdmin ReplSummary</b><p>"
+      $htmloutput = $htmloutput + "<table><colgroup><col/><col/><col/><col/><col/></colgroup>" + "<tr><th>Report</th></tr>"
+
+      $repdata | foreach { 
+        $repitem = $_.split("`t",[StringSplitOptions]::RemoveEmptyEntries)
+        $Result | foreach { $htmloutput = $htmloutput + "<tr><td>" + $repitem + "</td></tr>"}
+      }
+    }
+
+      $htmloutput = $htmloutput + "</table>"
+      $htmloutput | Out-Host
+  register: health_data
+  ignore_errors: true 
+    
+- set_stats:
+    data:
+      health_data: "{{ health_data.stdout_lines | to_nice_yaml }}"

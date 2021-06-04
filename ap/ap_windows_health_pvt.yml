@@ -1,0 +1,22 @@
+---
+- hosts: localhost 
+  gather_facts: false 
+
+  tasks: 
+  - name: Add new instance to host group
+    add_host:
+      hostname: "{{ item }}"
+      groupname: generic_group
+    loop: "{{ server_list }}"
+
+- hosts: generic_group
+  gather_facts: true
+  vars:
+    ansible_port: 5985
+    ansible_connection: winrm
+    ansible_winrm_transport: ntlm
+    ansible_winrm_server_cert_validation: ignore
+
+  roles:
+    - ap_windows_health_pvt
+

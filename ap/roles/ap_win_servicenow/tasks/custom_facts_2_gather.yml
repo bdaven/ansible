@@ -1,0 +1,14 @@
+---
+# Gather facts
+- name: Gather the default facts
+  setup:
+    fact_path: c:/custom_facts
+    # register: facts_result
+
+- name: Print all available facts
+  ansible.builtin.debug:
+    var: ansible_facts
+
+# - name: Debug ansible facts
+#   debug:
+#     var: ansible_facts

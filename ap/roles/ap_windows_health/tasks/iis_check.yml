@@ -1,0 +1,25 @@
+---
+- name: Get IIS Details
+  win_shell: |
+    $Webserver = Get-Windowsfeature | where-object {($_.Name -eq "Web-Server") -and ($_.InstallState -eq "Installed")}
+
+    If ($Webserver){
+
+        $Result = Get-IISSite
+
+        if ($Result) {
+        $htmloutput = "<b>" + $env:computername + " - IIS Information</b><p>"
+        $htmloutput = $htmloutput + "<table><colgroup><col/><col/><col/><col/><col/></colgroup>" + "<tr><th>Name</th><th>State</th><th>Bindings</th></tr>"
+        $Result | foreach { $htmloutput = $htmloutput + "<tr><td>" + $_.Name + "</td><td>" + $_.State + "</td><td>" + $_.Bindings + "</td></tr>"}
+
+        $htmloutput = $htmloutput + "</table>"
+        $htmloutput | Out-Host
+        }
+      }
+    
+  register: health_data
+  ignore_errors: true 
+    
+- set_stats:
+    data: 
+      health_data: "{{ health_data.stdout_lines | to_nice_yaml }}"

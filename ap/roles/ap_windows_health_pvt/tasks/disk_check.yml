@@ -1,0 +1,26 @@
+---
+
+- name: Disk Percentage Free Check
+  win_shell: |
+    $percentthreshold = "{{ disk_threshold }}"
+
+    $disks = Get-WmiObject -Class Win32_logicaldisk | Where-Object {($_.DeviceID -ne 'A:') -and ($_.DeviceID -ne 'Z:')} | Select-Object $env:computername, Name, DeviceID, VolumeName, Size, FreeSpace, @{Name='PercentageFree';Expression={"{0:n2}" -f (($_.freespace / $_.size)*100)}}
+    $Result = $disks | foreach { if ($_.'PercentageFree' -lt $percentthreshold) {$_.Name + " " + $_.PercentageFree + '% Free'}}
+
+    If ($Result -ne $null) {
+      $htmloutput = "<b>" + $env:computername + " - Disk Details</b><p>"
+      $htmloutput = $htmloutput + "<table><colgroup><col/><col/><col/><col/><col/></colgroup>" + "<tr><th>Drive - Percentage Free</th></tr>"
+      $Result | foreach { $htmloutput = $htmloutput + "<tr><td>" + $_ + "</td></tr>"}
+
+      $htmloutput = $htmloutput + "</table>"
+      $htmloutput | Out-Host
+    }
+  register: health_data
+  ignore_errors: true
+
+- set_stats:
+    data: 
+      health_data: "{{ health_data.stdout_lines | to_nice_yaml }}"
+  
+
+

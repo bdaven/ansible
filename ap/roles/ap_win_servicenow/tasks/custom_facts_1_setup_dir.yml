@@ -1,0 +1,17 @@
+---
+
+- name: Create custom_facts directory
+  win_file:
+    path: c:\custom_facts
+    state: directory
+
+- name: Remove custom_facts.ps1 file, if present
+  win_file:
+    path: c:\custom_facts\custom_facts.ps1
+    state: absent
+
+- name: Copy custom_facts.ps1 file to destination
+  win_copy:
+    src: custom_facts.ps1
+    dest: c:\custom_facts\custom_facts.ps1
+    remote_src: no

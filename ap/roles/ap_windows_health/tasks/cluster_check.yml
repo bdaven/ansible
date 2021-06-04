@@ -1,0 +1,22 @@
+---
+- name: Get Cluster Details
+  win_shell: |
+    $cluster = get-windowsfeature | where-object {($_.Name -eq "Failover-Clustering") -and ($_.InstallState -eq "Installed")}
+
+    if ($cluster){ 
+      $Result = Get-ClusterResource 
+      if ($Result) {
+        $htmloutput = "<b>" + $env:computername + " - Cluster Information</b><p>"
+        $htmloutput = $htmloutput + "<table><colgroup><col/><col/><col/><col/><col/></colgroup>" + "<tr><th>Name</th><th>State</th><th>OwnerGroup</th><th>ResourceType</th></tr>"
+        $Result | foreach { $htmloutput = $htmloutput + "<tr><td>" + $_.Name + "</td><td>" + $_.State + "</td><td>" + $_.OwnerGroup + "</td><td>" + $_.ResourceType + "</td></tr>"}
+
+        $htmloutput = $htmloutput + "</table>"
+        $htmloutput | Out-Host
+      }
+    } 
+  register: health_data
+  ignore_errors: true 
+    
+- set_stats:
+    data: 
+      health_data: "{{ health_data.stdout_lines | to_nice_yaml }}"

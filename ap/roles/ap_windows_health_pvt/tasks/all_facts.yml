@@ -1,0 +1,13 @@
+--- 
+
+- name: Print Ansible Facts
+  debug:
+   msg: 
+   - "{{ ansible_facts }}"
+
+- set_stats:
+    data: 
+      hostname: "{{ ansible_facts.hostname }}"
+
+
+

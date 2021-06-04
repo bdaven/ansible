@@ -1,0 +1,42 @@
+---
+# Get Server Information. 
+- name: Get Host Name
+  win_shell: |
+    hostname
+  register: hostname
+
+- name: Get Free Disk Space
+  win_shell: |
+    $diskinfo = gwmi Win32_LogicalDisk -Filter "DeviceID='C:'" | select Name, FileSystem,FreeSpace,BlockSize,Size | % {$_.BlockSize=(($_.FreeSpace)/($_.Size))*100;$_.FreeSpace=($_.FreeSpace/1GB);$_.Size=($_.Size/1GB);$_}
+    $diskinfo.FreeSpace 
+  register: free_disk_space
+
+- name: Get Event Errors
+  win_shell: |
+    $EventsErrors = Get-WinEvent –FilterHashtable @{logname=’system’; level=2} –MaxEvents 1
+    $EventsErrors.TimeCreated 
+    $EventsErrors.Message
+  register: event_info
+
+- name: healthcheck - retrieving current disk usage levels
+  win_shell: |
+    $disk = Get-WmiObject Win32_LogicalDisk -filter "DeviceID = 'c:' " | Select-Object FreeSpace, Size
+    $FreeSpace = $disk.FreeSpace -as [int]
+    $Size = $disk.Size -as [int]
+    $ratio = $disk.FreeSpace / $disk.Size
+    Write-Host $ratio
+  register: cdrive_capacity
+  ignore_errors: true 
+
+- set_stats:
+    data:
+      cdrive_capacity: "{{inventory_hostname}} - Failed\n"
+    per_host: no
+  when: cdrive_capacity.stdout_lines[0] | float >= 0.770
+  
+- set_stats:
+    data:    
+      free_disk_space: "{{ hostname.stdout_lines }} Disk 0 Free Disk - {{ free_disk_space.stdout_lines }} GB"
+      event_error: "{{ hostname.stdout_lines }} Event Viewer Error - {{ event_info.stdout_lines }}"
+      
+

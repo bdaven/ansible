@@ -1,0 +1,22 @@
+---
+
+- name: Event Viewer Application Errors
+  win_shell: |
+    $LastBoot = Get-WmiObject win32_operatingsystem | select @{LABEL=’LastBootUpTime’;EXPRESSION={$_.ConverttoDateTime($_.lastbootuptime)}}
+    $StartTime = $lastboot.LastBootUpTime
+    $Result = Get-WinEvent -FilterHashTable @{LogName='Application';StartTime=$StartTime;Level='2'} -MaxEvents 3
+
+    If ($Result -ne $null) {
+      $htmloutput = "<b>" + $env:computername + " - Event Errors Since Reboot</b><p>"
+      $htmloutput = $htmloutput + "<table><colgroup><col/><col/><col/><col/><col/></colgroup>" + "<tr><th>Status</th><th>Date</th><th>Time</th><th>Truncated Error</th></tr>"
+      $Result | foreach { $htmloutput = $htmloutput + "<tr><td>" + $_.LevelDisplayName + "</td><td>" + $_.TimeCreated.ToString("dd-MM-yyyy") + "</td><td>" + $_.TimeCreated.ToString("hh:mm:ss") + "</td><td>" + $_.Message.Substring(0,[Math]::Min(100,$_.Message.Length)) + "</td></tr>" }
+
+      $htmloutput = $htmloutput + "</table>"
+      $htmloutput | Out-Host
+    }
+  register: health_data
+  ignore_errors: true
+
+- set_stats:
+    data: 
+      health_data: "{{ health_data.stdout_lines | to_nice_yaml }}"

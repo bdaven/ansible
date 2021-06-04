@@ -1,0 +1,35 @@
+---
+
+- name: Get Server Uptime
+  win_shell: |
+    $LastBootUpTime = Get-CimInstance Win32_OperatingSystem | Select-Object LastBootUpTime
+
+    if ($LastBootUpTime) {
+        $sysuptime = (Get-Date) - $LastBootUpTime.LastBootUpTime
+        $Result = "" + $sysuptime.days + " Days " + $sysuptime.hours + " Hours " + $sysuptime.minutes + " Minutes "
+    }
+
+    If ($Result -ne $null) {
+        $htmloutput = "<b>" + $env:computername + " - Uptime</b><p>"
+        $htmloutput = $htmloutput + "<table><colgroup><col/><col/><col/><col/><col/></colgroup>" + "<tr><th>Server - Uptime</th></tr>"
+        $Result | foreach { $htmloutput = $htmloutput + "<tr><td>" + $Result + "</td></tr>"}
+
+        $htmloutput = $htmloutput + "</table>"
+        $htmloutput | Out-Host
+    }
+  register: health_data
+  ignore_errors: true 
+
+- set_stats:
+    data: 
+      health_data: "{{ health_data.stdout_lines | to_nice_yaml }}"
+
+
+# - name: Run the DNS record script
+#   win_shell: |
+#     hostname | Out-Host
+#   register: hostname
+
+# - set_stats:
+#     data:
+#       health_data: "{{ hostname.stdout_lines | to_nice_yaml }}"

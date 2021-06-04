@@ -1,0 +1,26 @@
+---
+
+- name: Get Basic Server Details
+  win_shell: |
+    $LastBootUpTime = Get-CimInstance Win32_OperatingSystem | Select-Object LastBootUpTime
+
+    if ($LastBootUpTime) {
+        $sysuptime = (Get-Date) - $LastBootUpTime.LastBootUpTime
+        $Result = "" + $sysuptime.days + " Days " + $sysuptime.hours + " Hours " + $sysuptime.minutes + " Minutes "
+    }
+
+    If ($Result -ne $null) {
+        $htmloutput = "<b>" + $env:computername + " - Details</b><p>"
+        $htmloutput = $htmloutput + "<table><colgroup><col/><col/><col/><col/><col/></colgroup>" + "<tr><th>Operating System</th><th>Role</th><th>Uptime</th><th>CPU</th><th>Memory</th><th>PS Ver</th></tr>"
+        $Result | foreach { $htmloutput = $htmloutput + "<tr><td>" + "{{ ansible_facts.os_name }}" + "</td><td>" + "{{ ansible_facts.windows_domain_role }}" + "</td><td>" + $Result + "</td><td>" + "{{ ansible_facts.processor_count }} CPU" + "</td><td>" + "{{ ansible_facts.memtotal_mb }} MB" + "</td><td>" + "{{ ansible_facts.powershell_version }}" + "</td></tr>" }
+
+        $htmloutput = $htmloutput + "</table>"
+        $htmloutput | Out-Host
+    }
+  register: health_data
+  ignore_errors: true 
+
+- set_stats:
+    data: 
+      health_data: "{{ health_data.stdout_lines | to_nice_yaml }}"
+

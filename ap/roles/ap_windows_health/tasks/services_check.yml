@@ -1,0 +1,23 @@
+---
+
+- name: Check to Ensure Automatic Services have started
+  win_shell: |
+    $Result = Get-Service | Select-Object -Property Name,Status,StartType | 
+    Where-Object {$_.Status -eq "Stopped" -and $_.StartType -eq "Automatic"} | 
+    # Update your service execptions here:
+    Where-Object {$_.Name -ne "RightScaleNetwork" -and $_.Name -ne "MapsBroker" -and $_.Name -notlike "CDPUser*"}   
+
+    If ($Result -ne $null) {
+      $htmloutput = "<b>" + $env:computername + " - Stopped Services</b><p>"
+      $htmloutput = $htmloutput + "<table><colgroup><col/><col/><col/><col/><col/></colgroup>" + "<tr><th>Name</th><th>Status</th><th>StartType</th></tr>"
+      $Result | foreach { $htmloutput = $htmloutput + "<tr><td>" + $_.Name + "</td><td>" + $_.Status + "</td><td>" + $_.StartType + "</td></tr>" }
+
+      $htmloutput = $htmloutput + "</table>"
+      $htmloutput | Out-Host
+    }
+  register: health_data
+  ignore_errors: true 
+    
+- set_stats:
+    data:
+      health_data: "{{ health_data.stdout_lines | to_nice_yaml }}"

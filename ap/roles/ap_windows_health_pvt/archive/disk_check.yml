@@ -1,0 +1,98 @@
+---
+# Check Disk Space on C: and set stat if under 10%
+- name: Check to Ensure Sufficient Disk Space on C:\. 
+  win_shell: |
+    $percent = Get-WmiObject win32_logicaldisk -filter "deviceid='C:'" | select name,freespace,size,@{Name='disk percentage %';Expression={($_.freespace / $_.size)*100}} 
+    [math]::Round($percent.'disk percentage %')
+  register: disk_percentage_c  
+  ignore_errors: true 
+
+- set_stats:
+    data:    
+      disk_percentage_c: "{{ ansible_facts.hostname }}; "
+  when: disk_percentage_c.stdout | int <= 10 | int
+
+# Check Disk Space on D: and set stat if under 10%
+- name: Check to Ensure Sufficient Disk Space on D:\. 
+  win_shell: |
+    If (Test-Path D:) {
+    $percent = Get-WmiObject win32_logicaldisk -filter "deviceid='D:'" | select name,freespace,size,@{Name='disk percentage %';Expression={($_.freespace / $_.size)*100}} 
+    [math]::Round($percent.'disk percentage %')}
+  register: disk_percentage_d  
+  ignore_errors: true 
+
+- set_stats:
+    data:    
+      disk_percentage_d: "{{ ansible_facts.hostname }}; "
+  when: (disk_percentage_d.stdout | int <= 10 | int) and (disk_percentage_d.stdout != "")
+  ignore_errors: true 
+
+# Check Disk Space on E: and set stat if under 10%
+- name: Check to Ensure Sufficient Disk Space on E:\. 
+  win_shell: |
+    If (Test-Path E:) {
+    $percent = Get-WmiObject win32_logicaldisk -filter "deviceid='E:'" | select name,freespace,size,@{Name='disk percentage %';Expression={($_.freespace / $_.size)*100}} 
+    [math]::Round($percent.'disk percentage %')}
+  register: disk_percentage_e  
+  ignore_errors: true 
+ 
+- set_stats:
+    data:    
+      disk_percentage_e: "{{ ansible_facts.hostname }}; "
+  when: (disk_percentage_e.stdout | int <= 10 | int) and (disk_percentage_e.stdout != "")
+  ignore_errors: true 
+
+# Check Disk Space on F: and set stat if under 10%
+- name: Check to Ensure Sufficient Disk Space on F:\. 
+  win_shell: |
+    If (Test-Path F:) {
+    $percent = Get-WmiObject win32_logicaldisk -filter "deviceid='F:'" | select name,freespace,size,@{Name='disk percentage %';Expression={($_.freespace / $_.size)*100}} 
+    [math]::Round($percent.'disk percentage %')}
+  register: disk_percentage_f  
+  ignore_errors: true 
+
+- set_stats:
+    data:    
+      disk_percentage_f: "{{ ansible_facts.hostname }}; "
+  when: (disk_percentage_f.stdout | int <= 10 | int) and (disk_percentage_f.stdout != "")
+  ignore_errors: true 
+
+# Check Disk Space on G: and set stat if under 10%
+- name: Check to Ensure Sufficient Disk Space on G:\. 
+  win_shell: |
+    If (Test-Path G:) {
+    $percent = Get-WmiObject win32_logicaldisk -filter "deviceid='G:'" | select name,freespace,size,@{Name='disk percentage %';Expression={($_.freespace / $_.size)*100}} 
+    [math]::Round($percent.'disk percentage %')}
+  register: disk_percentage_g  
+  ignore_errors: true 
+
+- set_stats:
+    data:    
+      disk_percentage_g: "{{ ansible_facts.hostname }}; "
+  when: (disk_percentage_g.stdout | int <= 10 | int) and (disk_percentage_g.stdout != "")
+  ignore_errors: true  
+
+# Check Disk Space on H: and set stat if under 10%
+- name: Check to Ensure Sufficient Disk Space on H:\. 
+  win_shell: |
+    If (Test-Path H:) {
+    $percent = Get-WmiObject win32_logicaldisk -filter "deviceid='H:'" | select name,freespace,size,@{Name='disk percentage %';Expression={($_.freespace / $_.size)*100}} 
+    [math]::Round($percent.'disk percentage %')}
+  register: disk_percentage_h  
+  ignore_errors: true 
+
+- set_stats:
+    data:    
+      disk_percentage_h: "{{ ansible_facts.hostname }}; "
+  when: (disk_percentage_h.stdout | int <= 10 | int) and (disk_percentage_h.stdout != "")
+  ignore_errors: true  
+
+
+
+
+
+
+
+
+
+

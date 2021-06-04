@@ -1,0 +1,38 @@
+---
+
+- name: Database Volume Percentage Free Check
+  win_shell: |
+    $percentthreshold = "{{ database_volume_threshold }}"
+
+    $Volumes = Get-WmiObject -Class Win32_volume | Where-Object {($_.Name -ne 'A:\') -and ($_.Name -ne 'D:\') -and ($_.Name -ne 'L:\') -and ($_.Name -ne 'T:\') -and ($_.Name -ne 'C:\') -and ($_.Name -ne 'Z:\') -and ($_.Name -notlike "\\?\Volume*")} | select Name, Freespace, Capacity, @{Name='percentagefree';Expression={"{0:n2}" -f (($_.freespace / $_.capacity)*100)}} 
+    $Result = $Volumes | foreach { if ($_.'percentagefree' -lt $percentthreshold) {$_.Name + " " + $_.'percentagefree' + '% Free'}}
+
+    If ($Result -ne $null) {
+      $htmloutput = "<b>" + $env:computername + " - Database Volume Details</b><p>"
+      $htmloutput = $htmloutput + "<table><colgroup><col/><col/><col/><col/><col/></colgroup>" + "<tr><th>Volume - Percentage Free</th></tr>"
+      $Result | foreach { $htmloutput = $htmloutput + "<tr><td>" + $_ + "</td></tr>"}
+
+      $htmloutput = $htmloutput + "</table>"
+      $htmloutput | Out-Host
+    }
+  register: health_data
+  ignore_errors: true
+
+- set_stats:
+    data: 
+      health_data: "{{ health_data.stdout_lines | to_nice_yaml }}"
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,388 @@
+---
+
+- name: Create registry path HKLM:\Software\AusPost
+  win_regedit:
+    path: HKLM:\Software\AusPost
+
+- name: Create registry path HKLM:\Software\AusPost\CMDB
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\Name
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: Name
+    type: string
+    data: "{{ custom_facts.Name }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\FullName
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: FullName
+    type: string
+    data: "{{ custom_facts.FullName }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\IsVirtual
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: IsVirtual
+    type: string
+    data: "{{ custom_facts.IsVirtual }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\InDMZ
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: InDMZ
+    type: string
+    data: "{{ custom_facts.InDMZ }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\Make
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: Make
+    type: string
+    data: "{{ custom_facts.Make }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\ModelID
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: ModelID
+    type: string
+    data: "{{ custom_facts.ModelID }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\AssetTag
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: AssetTag
+    type: string
+    data: "{{ custom_facts.AssetTag }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\SerialNumber
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: SerialNumber
+    type: string
+    data: "{{ custom_facts.SerialNumber }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\ClusterMode
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: ClusterMode
+    type: string
+    data: "{{ custom_facts.ClusterMode }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\Environment
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: Environment
+    type: string
+    data: "{{ custom_facts.Environment }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\OSDomain
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: OSDomain
+    type: string
+    data: "{{ custom_facts.OSDomain }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\IPAddress
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: IPAddress
+    type: string
+    data: "{{ custom_facts.IPAddress }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\BackupPolicy
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: BackupPolicy
+    type: string
+    data: "{{ custom_facts.BackupPolicy }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\HardwareRemote
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: HardwareRemote
+    type: string
+    data: "{{ custom_facts.HardwareRemote }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\Aliases
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: Aliases
+    type: string
+    data: "{{ custom_facts.Aliases }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\OperatingSystem
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: OperatingSystem
+    type: string
+    data: "{{ custom_facts.OperatingSystem }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\OSVersion
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: OSVersion
+    type: string
+    data: "{{ custom_facts.OSVersion }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\OSServicePack
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: OSServicePack
+    type: string
+    data: "{{ custom_facts.OSServicePack }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\FormFactor
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: FormFactor
+    type: string
+    data: "{{ custom_facts.FormFactor }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\RackUnit
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: RackUnit
+    type: string
+    data: "{{ custom_facts.RackUnit }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\RackPosition
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: RackPosition
+    type: string
+    data: "{{ custom_facts.RackPosition }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\ChassisSlot
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: ChassisSlot
+    type: string
+    data: "{{ custom_facts.ChassisSlot }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\PDUAPort
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: PDUAPort
+    type: string
+    data: "{{ custom_facts.PDUAPort }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\PDUBPort
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: PDUBPort
+    type: string
+    data: "{{ custom_facts.PDUBPort }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\Disk1Name
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: Disk1Name
+    type: string
+    data: "{{ custom_facts.Disk1Name }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\Disk1Size
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: Disk1Size
+    type: string
+    data: "{{ custom_facts.Disk1Size }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\Disk1SizeGB
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: Disk1SizeGB
+    type: string
+    data: "{{ custom_facts.Disk1SizeGB }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\Disk2Name
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: Disk2Name
+    type: string
+    data: "{{ custom_facts.Disk2Name }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\Disk2Size
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: Disk2Size
+    type: string
+    data: "{{ custom_facts.Disk2Size }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\Disk2SizeGB
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: Disk2SizeGB
+    type: string
+    data: "{{ custom_facts.Disk2SizeGB }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\Disk3Name
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: Disk3Name
+    type: string
+    data: "{{ custom_facts.Disk3Name }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\Disk3Size
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: Disk3Size
+    type: string
+    data: "{{ custom_facts.Disk3Size }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\Disk3SizeGB
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: Disk3SizeGB
+    type: string
+    data: "{{ custom_facts.Disk3SizeGB }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\CPUManufacturer
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: CPUManufacturer
+    type: string
+    data: "{{ custom_facts.CPUManufacturer }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\CPUCount
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: CPUCount
+    type: string
+    data: "{{ custom_facts.CPUCount }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\CPUType
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: CPUType
+    type: string
+    data: "{{ custom_facts.CPUType }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\CPUCoreCount
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: CPUCoreCount
+    type: string
+    data: "{{ custom_facts.CPUCoreCount }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\Ram
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: Ram
+    type: string
+    data: "{{ custom_facts.Ram }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\RamGB
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: RamGB
+    type: string
+    data: "{{ custom_facts.RamGB }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\NetAdapter1_DHCPEnabled
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: NetAdapter1_DHCPEnabled
+    type: string
+    data: "{{ custom_facts.NetAdapter1_DHCPEnabled }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\NetAdapter1_IPAddress
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: NetAdapter1_IPAddress
+    type: string
+    data: "{{ custom_facts.NetAdapter1_IPAddress }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\NetAdapter1_IPSubnet
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: NetAdapter1_IPSubnet
+    type: string
+    data: "{{ custom_facts.NetAdapter1_IPSubnet }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\NetAdapter1_IPGateway
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: NetAdapter1_IPGateway
+    type: string
+    data: "{{ custom_facts.NetAdapter1_IPGateway }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\NetAdapter1_MACAddress
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: NetAdapter1_MACAddress
+    type: string
+    data: "{{ custom_facts.NetAdapter1_MACAddress }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\NetAdapter2_DHCPEnabled
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: NetAdapter2_DHCPEnabled
+    type: string
+    data: "{{ custom_facts.NetAdapter2_DHCPEnabled }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\NetAdapter2_IPAddress
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: NetAdapter2_IPAddress
+    type: string
+    data: "{{ custom_facts.NetAdapter2_IPAddress }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\NetAdapter2_IPSubnet
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: NetAdapter2_IPSubnet
+    type: string
+    data: "{{ custom_facts.NetAdapter2_IPSubnet }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\NetAdapter2_IPGateway
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: NetAdapter2_IPGateway
+    type: string
+    data: "{{ custom_facts.NetAdapter2_IPGateway }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\NetAdapter2_MACAddress
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: NetAdapter2_MACAddress
+    type: string
+    data: "{{ custom_facts.NetAdapter2_MACAddress }}"
+
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\NetAdapter3_DHCPEnabled
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: NetAdapter3_DHCPEnabled
+    type: string
+    data: "{{ custom_facts.NetAdapter3_DHCPEnabled }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\NetAdapter3_IPAddress
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: NetAdapter3_IPAddress
+    type: string
+    data: "{{ custom_facts.NetAdapter3_IPAddress }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\NetAdapter3_IPSubnet
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: NetAdapter3_IPSubnet
+    type: string
+    data: "{{ custom_facts.NetAdapter3_IPSubnet }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\NetAdapter3_IPGateway
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: NetAdapter3_IPGateway
+    type: string
+    data: "{{ custom_facts.NetAdapter3_IPGateway }}"
+
+- name: Add or update registry path HKLM:\Software\AusPost\CMDB\NetAdapter3_MACAddress
+  win_regedit:
+    path: HKLM:\Software\AusPost\CMDB
+    name: NetAdapter3_MACAddress
+    type: string
+    data: "{{ custom_facts.NetAdapter3_MACAddress }}"

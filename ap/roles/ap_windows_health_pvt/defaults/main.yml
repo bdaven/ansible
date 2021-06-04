@@ -1,0 +1,15 @@
+---
+# defaults file for ap windows health
+
+
+# Set Fact for Servername
+servername: "{{ ansible_facts.hostname }}"
+
+# Set Fact for the Environment from Servername
+env: "{{ 'dev' if servername[1] == 'd' or servername[1] == 'D' else 'test' if servername[1] == 't' or servername[1] == 'T' else 'prod' if servername[1] == 'p' or servername[1] == 'P' else ''}}"
+
+# Set Fact for the Cloud Platform
+cloud: "{{ 'Amazon EC2' if servername[0] == 'a' or servername[0] == 'A' else 'VMware Virtual Platform' }}"
+
+# Define Database Server
+database_server: "{{ 'true' if servername[3] == 'd' or servername[3] == 'D' else 'false' }}"

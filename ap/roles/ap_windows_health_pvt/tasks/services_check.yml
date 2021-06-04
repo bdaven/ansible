@@ -1,0 +1,29 @@
+---
+
+- name: Check to Ensure Automatic Services have started
+  win_shell: |
+    $Dhcp = Get-Service | Select-Object -Property Name,Status,StartType | Where-Object {$_.Name -eq "Dhcp" } 
+    $gpsvc = Get-Service | Select-Object -Property Name,Status,StartType | Where-Object {$_.Name -eq "gpsvc" } 
+    $Netlogon = Get-Service | Select-Object -Property Name,Status,StartType | Where-Object {$_.Name -eq "Netlogon" } 
+    $PlugPlay = Get-Service | Select-Object -Property Name,Status,StartType | Where-Object {$_.Name -eq "PlugPlay" } 
+    $Spooler = Get-Service | Select-Object -Property Name,Status,StartType | Where-Object {$_.Name -eq "Spooler" } 
+
+    If ($Dhcp -ne $null) {
+        $htmloutput = "<b>" + $env:computername + " - Services</b><p>"
+        $htmloutput = $htmloutput + "<table><colgroup><col/><col/><col/><col/><col/></colgroup>" + "<tr><th>Name</th><th>Status</th><th>StartType</th></tr>"
+
+        $Dhcp | foreach { $htmloutput = $htmloutput + "<tr><td>" + $_.Name + "</td><td>" + $_.Status + "</td><td>" + $_.StartType + "</td></tr>" }
+        $gpsvc | foreach { $htmloutput = $htmloutput + "<tr><td>" + $_.Name + "</td><td>" + $_.Status + "</td><td>" + $_.StartType + "</td></tr>" }
+        $Netlogon | foreach { $htmloutput = $htmloutput + "<tr><td>" + $_.Name + "</td><td>" + $_.Status + "</td><td>" + $_.StartType + "</td></tr>" }
+        $PlugPlay | foreach { $htmloutput = $htmloutput + "<tr><td>" + $_.Name + "</td><td>" + $_.Status + "</td><td>" + $_.StartType + "</td></tr>" }
+        $Spooler | foreach { $htmloutput = $htmloutput + "<tr><td>" + $_.Name + "</td><td>" + $_.Status + "</td><td>" + $_.StartType + "</td></tr>" }
+
+        $htmloutput = $htmloutput + "</table>"
+        $htmloutput | Out-Host
+    }
+  register: health_data
+  ignore_errors: true 
+    
+- set_stats:
+    data:
+      health_data: "{{ health_data.stdout_lines | to_nice_yaml }}"
